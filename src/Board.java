@@ -27,14 +27,18 @@ public class Board {
         }
     }
 
-    public void printBoard() {
+    public void printBoard(boolean hideSolution) {
         for(int y = 0; y < 9; y++) {
             for(int x = 0; x < 9; x++) {
                 // Print board values
-                if(this.board[x][y].getValue() > 0) {
-                    System.out.print(this.board[x][y].getValue() + " ");
+                if(!hideSolution) {
+                    System.out.print(this.board[x][y].requiredValue + " ");
                 } else {
-                    System.out.print("- ");
+                    if (this.board[x][y].getValue() > 0) {
+                        System.out.print(this.board[x][y].getValue() + " ");
+                    } else {
+                        System.out.print("- ");
+                    }
                 }
 
                 // Vertical separator
