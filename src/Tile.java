@@ -1,10 +1,11 @@
 import java.util.List;
 
 public class Tile {
-    public int value;
+    public int requiredValue = 0;
+    private int value;
     private List<Integer> pencil;
 
-    public Tile(int value, List<Integer> pencil, int requiredValue) {
+    public Tile(int value, List<Integer> pencil) {
         // Value
         checkValue(value, "Constructor: value");
         checkValue(value, "Constructor: requiredValue");
@@ -32,8 +33,12 @@ public class Tile {
         this.value = value;
     }
 
+    public int getValue() {
+        return this.value;
+    }
+
     private void checkValue(int value, String name) {
-        if(value < 0 || value >= 9) {
+        if(value < 0 || value > 9) {
             throw new IllegalArgumentException("Invalid value for "+name);
         }
     }

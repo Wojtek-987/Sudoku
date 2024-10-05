@@ -3,6 +3,7 @@ public class Main {
         Board board = new Board();
         board.initEmptyBoard();
         board.fillBoard();
+        board.removeValues(35);
         board.printBoard();
     }
 }
