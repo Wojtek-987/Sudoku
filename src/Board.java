@@ -14,7 +14,7 @@ public class Board {
     public void initEmptyBoard() {
         for(int y = 0; y < 9; y++) {
             for(int x = 0; x < 9; x++) {
-                this.board[x][y] = new Tile(0, Collections.emptyList());
+                this.board[x][y] = new Tile(x, y, 0, Collections.emptyList());
             }
         }
     }
@@ -69,7 +69,7 @@ public class Board {
         List<Integer> validChoices = getValidChoices(x, y);
 
         // Try valid numbers for Tile
-        while (!validChoices.isEmpty()) {
+        while(!validChoices.isEmpty()) {
             int randomIndex = random.nextInt(validChoices.size());
             this.board[x][y].setValue(validChoices.remove(randomIndex));
 
@@ -89,7 +89,7 @@ public class Board {
         return false;
     }
 
-    private List<Integer> getValidChoices(int col, int row) {
+    public List<Integer> getValidChoices(int col, int row) {
         List<Integer> choices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
         // Clear choices from other values in the row
         for(int i = 0; i < 9; i++) {
@@ -124,13 +124,25 @@ public class Board {
             if(this.board[randX][randY].getValue() > 0) {
                 this.board[randX][randY].setValue(0);
 
-                // If is solvable (always returns true for now - solver not implemented)
-                if(Solver.canSolve(this)) {
+                // If is solvable
+                if(Solver.hasUniqueSolution(this)) {
                     count--;
                 } else {
                     this.board[randX][randY].setValue(this.board[randX][randY].requiredValue);
                 }
             }
         }
+    }
+
+    public List<Tile> getEmpty() {
+        List<Tile> empty = new ArrayList<>();
+        for(int y = 0; y < 9; y++) {
+            for(int x = 0; x < 9; x++) {
+                if(this.board[x][y].getValue() == 0) {
+                    empty.add(this.board[x][y]);
+                }
+            }
+        }
+        return empty;
     }
 }
